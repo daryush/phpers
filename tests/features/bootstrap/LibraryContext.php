@@ -9,17 +9,30 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 
+use BooksLibrary\Application\Command\BorrowBook;
+use BooksLibrary\Application\Handler\BorrowBookHandler;
+use BooksLibrary\Domain\Book;
+use BooksLibrary\Domain\BooksRepository;
 use BooksLibrary\Domain\LibraryCard;
 use BooksLibrary\Domain\LibraryCardsRepository;
+use BooksLibrary\Infrastructure\Repository\BooksRepository\InMemoryBooksRepository;
 use BooksLibrary\Infrastructure\Repository\LibraryCardsRepository\InMemoryLibraryCardsRepository;
 
 class LibraryContext implements Context
 {
+    /** @var LibraryCardsRepository  */
     private $libraryCardsRepository;
+
+    /** @var BooksRepository  */
+    private $booksRepository;
+
+    /** @var \DateTimeImmutable */
+    private $today;
 
     public function __construct()
     {
         $this->libraryCardsRepository = new InMemoryLibraryCardsRepository();
+        $this->booksRepository = new InMemoryBooksRepository();
     }
 
     /**
@@ -33,27 +46,30 @@ class LibraryContext implements Context
     }
 
     /**
-     * @Given there is book :arg1 with isbn number :arg2 that can be borrowed for :arg3 days
+     * @Given there is book :bookTitle with isbn number :isbn that can be borrowed for :borrowingDays days
      */
-    public function thereIsBookWithIsbnNumberThatCanBeBorrowedForDays($arg1, $arg2, $arg3)
+    public function thereIsBookWithIsbnNumberThatCanBeBorrowedForDays($bookTitle, $isbn, $borrowingDays)
     {
-        throw new PendingException();
+        $book = new Book($bookTitle, $isbn, $borrowingDays);
+        $this->booksRepository->add($book);
     }
 
     /**
-     * @Given today is :arg1
+     * @Given today is :date
      */
-    public function todayIs($arg1)
+    public function todayIs($date)
     {
-        throw new PendingException();
+        $this->today = new \DateTimeImmutable($date);
     }
 
     /**
-     * @When :arg1 borrow book marked with isbn :arg2
+     * @When :readerEmail borrow book marked with isbn :isbn
      */
-    public function borrowBookMarkedWithIsbn($arg1, $arg2)
+    public function borrowBookMarkedWithIsbn($readerEmail, $isbn)
     {
-        throw new PendingException();
+        $command = new BorrowBook($readerEmail, $isbn);
+
+        (new BorrowBookHandler($this->booksRepository, $this->libraryCardsRepository))->handle($command);
     }
 
     /**

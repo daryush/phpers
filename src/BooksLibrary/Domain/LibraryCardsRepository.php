@@ -12,6 +12,6 @@ namespace BooksLibrary\Domain;
 interface LibraryCardsRepository
 {
     public function add(LibraryCard $libraryCard);
-
+    public function find(string $email): ?LibraryCard;
 
 }

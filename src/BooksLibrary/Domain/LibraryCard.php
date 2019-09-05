@@ -30,12 +30,12 @@ class LibraryCard
         return $this->readerEmail;
     }
 
-    public function recordBorrowing(Book $book)
+    public function recordBorrowing(Book $book, \DateTimeImmutable $borrowDate)
     {
         $this->borrowings[] = new BookBorrowing(
             $book->getIsbn(),
-            new \DateTimeImmutable(),
-            (new \DateTimeImmutable())->add(
+            $borrowDate,
+            ($borrowDate)->add(
                 new \DateInterval(
                     sprintf('P%sD', $book->getBorrowingDays()
                     )

@@ -23,21 +23,18 @@ class BorrowBookHandlerSpec extends ObjectBehavior
 
         $readerEmail = 'john@test.com';
         $isbn = '9781234567897';
+        $borrowDate = new \DateTimeImmutable();
         $command = new BorrowBook(
             $readerEmail,
-            $isbn
+            $isbn,
+            $borrowDate
         );
 
         $booksRepository->find($isbn)->willReturn($book);
         $libraryCardsRepository->find($readerEmail)->willReturn($libraryCard);
 
-        $libraryCard->recordBorrowing($book)->shouldBeCalled();
-
-//        $libraryCard->getBorowings()->shouldHaveCount(0);
+        $libraryCard->recordBorrowing($book, $borrowDate)->shouldBeCalled();
 
         $this->handle($command);
-
-//        $libraryCard->getBorowings()->shouldHaveCount(1);
-
     }
 }

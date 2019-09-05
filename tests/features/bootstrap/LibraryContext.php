@@ -67,7 +67,7 @@ class LibraryContext implements Context
      */
     public function borrowBookMarkedWithIsbn($readerEmail, $isbn)
     {
-        $command = new BorrowBook($readerEmail, $isbn);
+        $command = new BorrowBook($readerEmail, $isbn, $this->today);
 
         (new BorrowBookHandler($this->booksRepository, $this->libraryCardsRepository))->handle($command);
     }

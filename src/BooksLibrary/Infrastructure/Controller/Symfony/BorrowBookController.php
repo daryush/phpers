@@ -36,7 +36,8 @@ class BorrowBookController extends AbstractController
 
         $command = new BorrowBook(
             $request->get('readerEmail'),
-            $request->get('isbn')
+            $request->get('isbn'),
+            new \DateTimeImmutable()
         );
 
         $errors = $validator->validate($command);

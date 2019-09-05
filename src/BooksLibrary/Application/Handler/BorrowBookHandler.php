@@ -38,6 +38,6 @@ class BorrowBookHandler
             return null;
         }
 
-        $libraryCard->recordBorrowing($book);
+        $libraryCard->recordBorrowing($book, $command->getBorrowDate());
     }
 }

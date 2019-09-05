@@ -20,10 +20,16 @@ class BorrowBook
      */
     private $isbn;
 
-    public function __construct(string $readerEmail, string $isbn)
+    /**
+     * @var \DateTimeImmutable
+     */
+    private $borrowDate;
+
+    public function __construct(string $readerEmail, string $isbn, \DateTimeImmutable $borrowDate)
     {
         $this->readerEmail = $readerEmail;
         $this->isbn = $isbn;
+        $this->borrowDate = $borrowDate;
     }
 
     /**
@@ -40,5 +46,13 @@ class BorrowBook
     public function getIsbn(): string
     {
         return $this->isbn;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getBorrowDate(): \DateTimeImmutable
+    {
+        return $this->borrowDate;
     }
 }

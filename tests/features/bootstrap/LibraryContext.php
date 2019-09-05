@@ -102,7 +102,7 @@ class LibraryContext implements Context
                 if ($borrowing->getReturnDate()->format('d-m-Y') !== $returnDate) {
                     throw new \LogicException(
                         sprintf(
-                            'return date should be %s not $s',
+                            'return date should be %s not %s',
                             $borrowing->getReturnDate()->format('d-m-Y'),
                             $returnDate
                         )

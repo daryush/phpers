@@ -1,0 +1,13 @@
+BooksLibrary\Domain\Book:
+  type: entity
+  table: books
+  id:
+    isbn:
+      type: string
+      generator:
+        strategy: NONE
+  fields:
+    title:
+      type: string
+    borrowingDays:
+      type: integer

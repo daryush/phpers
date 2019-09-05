@@ -10,7 +10,7 @@ use BooksLibrary\Domain\LibraryCardsRepository;
 
 class InMemoryBooksRepository implements BooksRepository
 {
-    private $books;
+    private $books = [];
 
     public function add(Book $book)
     {

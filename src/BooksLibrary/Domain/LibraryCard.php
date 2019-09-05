@@ -15,7 +15,7 @@ class LibraryCard
      * @var string
      */
     private $readerEmail;
-    private $borrowings;
+    private $borrowings = [];
 
     public function __construct(string $readerEmail)
     {

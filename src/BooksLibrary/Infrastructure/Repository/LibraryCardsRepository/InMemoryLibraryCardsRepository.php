@@ -8,7 +8,7 @@ use BooksLibrary\Domain\LibraryCardsRepository;
 
 class InMemoryLibraryCardsRepository implements LibraryCardsRepository
 {
-    private $cards;
+    private $cards = [];
 
     public function add(LibraryCard $libraryCard)
     {

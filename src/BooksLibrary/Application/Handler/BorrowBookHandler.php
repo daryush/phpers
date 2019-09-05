@@ -34,6 +34,9 @@ class BorrowBookHandler
     {
         $book = $this->booksRepository->find($command->getIsbn());
         $libraryCard = $this->libraryCardsRepository->find($command->getReaderEmail());
+        if (!$libraryCard) {
+            return null;
+        }
 
         $libraryCard->recordBorrowing($book);
     }

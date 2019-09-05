@@ -1,0 +1,3 @@
+controllers:
+    resource: ../../src/BooksLibrary/Infrastructure/Controller/Symfony/
+    type: annotation

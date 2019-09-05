@@ -46,7 +46,10 @@ class LibraryCard
 
     }
 
-    public function getBorowings()
+    /**
+     * @return BookBorrowing[]
+     */
+    public function getBorowings(): array
     {
         return $this->borrowings;
     }

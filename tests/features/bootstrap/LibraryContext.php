@@ -73,18 +73,46 @@ class LibraryContext implements Context
     }
 
     /**
-     * @Then :arg1 library card should contain borrowing of book with isbn :arg2
+     * @Then :readerEmail library card should contain borrowing of book with isbn :isbn
      */
-    public function libraryCardShouldContainBorrowingOfBookWithIsbn($arg1, $arg2)
+    public function libraryCardShouldContainBorrowingOfBookWithIsbn($readerEmail, $isbn)
     {
-        throw new PendingException();
+        /** @var LibraryCard $libraryCard */
+        $libraryCard = $this->libraryCardsRepository->find($readerEmail);
+
+        foreach ($libraryCard->getBorowings() as $borrowing) {
+            if ($borrowing->getIsbn() === $isbn) {
+                return;
+            }
+        }
+
+        throw new \LogicException(sprintf('there is no borrowing of book %s', $isbn));
     }
 
     /**
-     * @Then :arg1 should return book with isbn :arg2 at least on :arg3
+     * @Then :readerEmail should return book with isbn :isbn at least on :returnDate
      */
-    public function shouldReturnBookWithIsbnAtLeastOn($arg1, $arg2, $arg3)
+    public function shouldReturnBookWithIsbnAtLeastOn($readerEmail, $isbn, $returnDate)
     {
-        throw new PendingException();
+        /** @var LibraryCard $libraryCard */
+        $libraryCard = $this->libraryCardsRepository->find($readerEmail);
+
+        foreach ($libraryCard->getBorowings() as $borrowing) {
+            if ($borrowing->getIsbn() === $isbn) {
+                if ($borrowing->getReturnDate()->format('d-m-Y') !== $returnDate) {
+                    throw new \LogicException(
+                        sprintf(
+                            'return date should be %s not $s',
+                            $borrowing->getReturnDate()->format('d-m-Y'),
+                            $returnDate
+                        )
+                    );
+                } else {
+                    return;
+                }
+            }
+        }
+
+        throw new \LogicException(sprintf('there is no borrowing of book %s', $isbn));
     }
 }

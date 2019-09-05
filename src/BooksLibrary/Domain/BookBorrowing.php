@@ -30,4 +30,30 @@ class BookBorrowing
         $this->borrowingDate = $borrowingDate;
         $this->returnDate = $returnDate;
     }
+
+    /**
+     * @return string
+     */
+    public function getIsbn(): string
+    {
+        return $this->isbn;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getBorrowingDate(): \DateTimeImmutable
+    {
+        return $this->borrowingDate;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getReturnDate(): \DateTimeImmutable
+    {
+        return $this->returnDate;
+    }
+
+
 }
